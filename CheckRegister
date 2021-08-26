@@ -1,0 +1,148 @@
+A university assigns the Register Number for the students in the format of AABBBCCCC, where AA represents year of joined (Valid range is between 10 to 21), BBB represents Programme code, CCCC represents Four-digit number. The following table provides various degrees, programmes code, duration, and sample registration numbers.
+SNO
+Degree
+Programme Codes
+Duration of Programme
+Sample Registration Numbers
+Assume that the Placement officer of the same University announced like, only Final Year students are eligible to apply for placements and applications will be received through interface. 
+Write a JAVA program to take input as set of register numbers of the students and display their current year of study and whether eligible to apply for placement or not.
+
+
+
+CODE
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Year;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Scanner;
+import java.util.Date;
+
+public class test{
+public static String[] input()
+{
+    int n;
+    Scanner sc = new Scanner(System.in);
+    
+    System.out.println("Enter no of students: ");
+    n = sc.nextInt();
+    
+    System.out.println("Enter " + n + " Reg numbers of students");
+    String reg[] = new String[n];
+    for (int i = 0; i < n; i++) {
+        reg[i] = sc.next();
+    }
+    
+    for (int i = 0; i < n; i++) {
+        System.out.println("The output is: " + reg[i] + " ");
+    }
+    
+    return reg;
+}
+public static int getYear(String word)
+{
+    String year;
+    year = word.substring(0,2);
+    int join_year = Integer.parseInt(year);
+    return join_year;
+    
+}
+public static int getDateYear(String word)
+{
+    String year;
+    year = word.substring(2,4);
+    int y =Integer.parseInt(year);
+    return y;
+    
+}
+
+public static String getCode(String word)
+{
+    String c;
+    c = word.substring(2,5);
+    
+    return c;
+}
+public static String getProgramCode(String word)
+{
+    String pc;
+    pc = word.substring(5,9);
+    
+    return pc;
+}
+public static String getDate(String word)
+{
+    String pc;
+    pc = word.substring(5,9);
+    
+    return pc;
+}
+public static int get_duration_of_program(String prog_code)
+{
+    int code = 0;
+    switch(prog_code)
+    {
+        case "BIT":
+        case "BME":
+        case "BCE":
+        case "BEE":
+            code = 4;
+            break;
+        case "BCS":
+        case "BCA":
+            code = 3;
+            break;
+        case "MIT":
+        case "MSC":
+        case "MPC":
+            code = 2;
+            break;
+        case "MIS":
+        case "MSE":
+            code = 5;
+            break;
+        
+    }
+    return code;
+}
+
+public static void main(String[] args)
+{
+    String thisYear = Year.now().toString();
+    String [] reg = input();
+    int join_year;
+    String prog_code;
+    String serial_number;
+    int current_year = getDateYear(thisYear) + 1;
+    
+    
+    for(int i = 0; i<reg.length; i++)
+    {
+        join_year = getYear(reg[i]);
+        prog_code = getCode(reg[i]);
+        serial_number = getProgramCode(reg[i]);
+        
+        
+        int duration_of_program = get_duration_of_program(prog_code);
+        
+        if((join_year + duration_of_program) == (current_year))
+        {
+            System.out.println(reg[i] + " : Eligible for Placement due to Final Year Student");
+        }
+        else if((join_year + duration_of_program) < (current_year))
+        {
+            System.out.println(reg[i] + " : Not eligible for Placement due to Passedout(Duration Over) Student");
+        }
+        else
+        {
+            System.out.println(reg[i] + " : Not eligible for Placement due to " + (current_year-join_year) +" Year Student");
+        }
+        
+    }
+}
+    
+}
+
+
+
